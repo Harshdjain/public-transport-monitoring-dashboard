@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MetroMove | Transport Monitoring</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #172033;
+    }
+    header {
+      background: #102b46;
+      color: white;
+      padding: 24px 6%;
+    }
+    header h1 { margin: 0 0 8px; }
+    header p { margin: 0; color: #d4e3f3; }
+    main { max-width: 1200px; margin: auto; padding: 24px; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .card, .panel {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #0f172a0d;
+    }
+    .stat-number { font-size: 28px; font-weight: bold; margin-top: 10px; }
+    .panel { margin-bottom: 24px; }
+    .notice {
+      border-left: 5px solid #e99a24;
+      background: #fff7e6;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .advisory {
+      border-left: 5px solid #2877bd;
+      background: #edf6ff;
+      padding: 16px;
+      border-radius: 8px;
+    }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 680px; }
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    th { background: #f8fafc; }
+    .pill {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .low, .running { background: #dcfce7; color: #166534; }
+    .moderate, .delayed { background: #fef3c7; color: #92400e; }
+    .high, .diverted { background: #fee2e2; color: #991b1b; }
+    footer { text-align: center; padding: 24px; color: #64748b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>MetroMove</h1>
+    <p>Public Transport Monitoring Dashboard</p>
+    <p style="margin-top:12px">Live-style monitoring using simulated transport data</p>
+  </header>
+
+  <main>
+    <section class="stats">
+      <div class="card">
+        Active Routes
+        <div class="stat-number" id="routeCount">4</div>
+      </div>
+      <div class="card">
+        Buses Monitored
+        <div class="stat-number" id="busCount">4</div>
+      </div>
+      <div class="card">
+        Service Disruptions
+        <div class="stat-number" id="disruptionCount">2</div>
+      </div>
+      <div class="card">
+        Data Source
+        <div class="stat-number" style="font-size:20px">Simulation</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Bus Route Information</h2>
+      <p>Arrival times and operating conditions are illustrative, not real-time data.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Route</th>
+              <th>From</th>
+              <th>Destination</th>
+              <th>Next Arrival</th>
+              <th>Crowd Level</th>
+              <th>Service Status</th>
+            </tr>
+          </thead>
+          <tbody id="busTable">
+            <tr>
+              <td>101</td><td>Central Station</td><td>City Hospital</td>
+              <td>5 min</td><td><span class="pill low">Low</span></td>
+              <td><span class="pill running">Running</span></td>
+            </tr>
+            <tr>
+              <td>205</td><td>North Terminal</td><td>Tech Park</td>
+              <td>12 min</td><td><span class="pill moderate">Moderate</span></td>
+              <td><span class="pill delayed">Delayed</span></td>
+            </tr>
+            <tr>
+              <td>310</td><td>East Market</td><td>Airport</td>
+              <td>8 min</td><td><span class="pill high">High</span></td>
+              <td><span class="pill diverted">Diverted</span></td>
+            </tr>
+            <tr>
+              <td>412</td><td>University</td><td>South Terminal</td>
+              <td>3 min</td><td><span class="pill low">Low</span></td>
+              <td><span class="pill running">Running</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Service Disruptions</h2>
+      <div class="notice">
+        <strong>Route 205 — Delay</strong>
+        <p>Simulated traffic congestion near the North Terminal may delay this service by 10 minutes.</p>
+      </div>
+      <div class="notice">
+        <strong>Route 310 — Diversion</strong>
+        <p>A simulated road closure near East Market has temporarily changed the route.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Passenger Advisories</h2>
+      <div class="advisory">
+        <strong>Plan your journey</strong>
+        <p>Allow additional travel time for disrupted services. Check route information before boarding.</p>
+        <p>Passengers requiring accessible travel should confirm vehicle and stop accessibility with the operator.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    MetroMove Transport Authority Demo | Simulated data only
+  </footer>
+</body>
+</html>
