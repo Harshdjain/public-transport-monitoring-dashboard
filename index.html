@@ -88,7 +88,7 @@
       </div>
       <div class="card">
         Service Disruptions
-        <div class="stat-number" id="disruptionCount">2</div>
+        <div class="stat-number" id="disruptionCount">3</div>
       </div>
       <div class="card">
         Data Source
@@ -97,8 +97,19 @@
     </section>
 
     <section class="panel">
-      <h2>Bus Route Information</h2>
-      <p>Arrival times and operating conditions are illustrative, not real-time data.</p>
+<h2>Bus Route Information</h2>
+<p>Arrival times and operating conditions are illustrative, not real-time data.</p>
+
+<label for="routeFilter">Filter by route number:</label>
+<input
+  id="routeFilter"
+  type="text"
+  placeholder="Enter route number, e.g. 205"
+  aria-label="Filter buses by route number"
+  style="padding:10px; margin:12px 0; width:100%; max-width:350px;
+         border:1px solid #cbd5e1; border-radius:6px;"
+>
+<p id="filterMessage" aria-live="polite">Showing all routes.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -147,6 +158,13 @@
         <strong>Route 310 — Diversion</strong>
         <p>A simulated road closure near East Market has temporarily changed the route.</p>
       </div>
+      <div class="notice">
+  <strong>Route 101 — Temporary Stop Closure</strong>
+  <p>
+    The simulated Central Library stop is temporarily closed.
+    Passengers should use the next available stop.
+  </p>
+</div>
     </section>
 
     <section class="panel">
@@ -162,5 +180,31 @@
   <footer>
     MetroMove Transport Authority Demo | Simulated data only
   </footer>
+  <script>
+  const routeFilter = document.getElementById("routeFilter");
+  const busTable = document.getElementById("busTable");
+  const filterMessage = document.getElementById("filterMessage");
+
+  routeFilter.addEventListener("input", function () {
+    const query = routeFilter.value.trim().toLowerCase();
+    const rows = Array.from(busTable.querySelectorAll("tr"));
+    let visibleCount = 0;
+
+    rows.forEach(function (row) {
+      const routeNumber = row.cells[0].textContent.trim().toLowerCase();
+      const matches = routeNumber.includes(query);
+
+      row.hidden = !matches;
+
+      if (matches) {
+        visibleCount++;
+      }
+    });
+
+    filterMessage.textContent = query
+      ? visibleCount + " matching route(s) found."
+      : "Showing all routes.";
+  });
+</script>
 </body>
 </html>
