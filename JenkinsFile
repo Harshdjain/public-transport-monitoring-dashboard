@@ -1,0 +1,42 @@
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Validate Files') {
+            steps {
+                bat 'if not exist index.html exit /b 1'
+                bat 'if not exist Dockerfile exit /b 1'
+                bat 'if not exist deployment.yaml exit /b 1'
+                bat 'findstr /C:"routeFilter" index.html'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t harshdjain/transport-dashboard:v1 .'
+            }
+        }
+
+        stage('Validate Kubernetes YAML') {
+            steps {
+                bat 'kubectl apply --dry-run=client -f deployment.yaml'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Dashboard build and validation succeeded.'
+        }
+        failure {
+            echo 'Pipeline failed. Check Console Output.'
+        }
+    }
+}
